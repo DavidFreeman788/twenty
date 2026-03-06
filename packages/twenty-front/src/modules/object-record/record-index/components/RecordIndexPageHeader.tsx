@@ -4,6 +4,7 @@ import { contextStoreCurrentViewIdComponentState } from '@/context-store/states/
 import { contextStoreNumberOfSelectedRecordsComponentState } from '@/context-store/states/contextStoreNumberOfSelectedRecordsComponentState';
 import { useFilteredObjectMetadataItems } from '@/object-metadata/hooks/useFilteredObjectMetadataItems';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
+import { RecordIndexPageSizeSelector } from '@/object-record/record-index/components/RecordIndexPageSizeSelector';
 import { PageHeaderToggleCommandMenuButton } from '@/ui/layout/page-header/components/PageHeaderToggleCommandMenuButton';
 import { PageHeader } from '@/ui/layout/page/components/PageHeader';
 import { useRecoilComponentValue } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentValue';
@@ -68,6 +69,7 @@ export const RecordIndexPageHeader = () => {
     <PageHeader title={pageHeaderTitle} Icon={Icon}>
       {isDefined(contextStoreCurrentViewId) && (
         <>
+          <RecordIndexPageSizeSelector />
           <RecordIndexActionMenu />
           <PageHeaderToggleCommandMenuButton />
         </>

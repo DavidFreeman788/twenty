@@ -6,8 +6,10 @@ import { anyFieldFilterValueComponentState } from '@/object-record/record-filter
 import { currentRecordFiltersComponentState } from '@/object-record/record-filter/states/currentRecordFiltersComponentState';
 import { useCurrentRecordGroupDefinition } from '@/object-record/record-group/hooks/useCurrentRecordGroupDefinition';
 import { useRecordGroupFilter } from '@/object-record/record-group/hooks/useRecordGroupFilter';
+import { recordIndexPageSizeState } from '@/object-record/record-index/states/recordIndexPageSizeState';
 import { currentRecordSortsComponentState } from '@/object-record/record-sort/states/currentRecordSortsComponentState';
 import { useRecoilComponentValue } from '@/ui/utilities/state/component-state/hooks/useRecoilComponentValue';
+import { useRecoilValue } from 'recoil';
 import {
   combineFilters,
   computeRecordGqlOperationFilter,
@@ -40,6 +42,8 @@ export const useFindManyRecordIndexTableParams = (
 
   const { filterValueDependencies } = useFilterValueDependencies();
 
+  const recordIndexPageSize = useRecoilValue(recordIndexPageSizeState);
+
   const currentFilters = computeRecordGqlOperationFilter({
     fields: objectMetadataItem?.fields ?? [],
     recordFilterGroups: currentRecordFilterGroups,
@@ -63,7 +67,8 @@ export const useFindManyRecordIndexTableParams = (
     objectNameSingular,
     filter: combineFilters([currentFilters, recordGroupFilter, anyFieldFilter]),
     orderBy,
-    // If we have a current record group definition, we only want to fetch 8 records by page
-    ...(currentRecordGroupDefinition ? { limit: 8 } : {}),
+    // If we have a current record group definition, we only want to fetch 8 records by page.
+    // Otherwise, use the user-selected page size in table view.
+    limit: currentRecordGroupDefinition ? 8 : recordIndexPageSize,
   };
 };

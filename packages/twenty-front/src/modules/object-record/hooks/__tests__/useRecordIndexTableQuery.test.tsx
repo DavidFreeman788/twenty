@@ -4,13 +4,13 @@ import { type ReactNode } from 'react';
 import { RecordComponentInstanceContextsWrapper } from '@/object-record/components/RecordComponentInstanceContextsWrapper';
 import { RecordGroupContext } from '@/object-record/record-group/states/context/RecordGroupContext';
 import { useRecordIndexTableQuery } from '@/object-record/record-index/hooks/useRecordIndexTableQuery';
+import { DEFAULT_RECORD_INDEX_PAGE_SIZE } from '@/object-record/record-index/states/recordIndexPageSizeState';
 import { RecordTableComponentInstance } from '@/object-record/record-table/components/RecordTableComponentInstance';
 
 import { RecordTableContextProvider } from '@/object-record/record-table/components/RecordTableContextProvider';
 import { ViewComponentInstanceContext } from '@/views/states/contexts/ViewComponentInstanceContext';
 import { type MockedResponse } from '@apollo/client/testing';
 import gql from 'graphql-tag';
-import { QUERY_DEFAULT_LIMIT_RECORDS } from 'twenty-shared/constants';
 import { getJestMetadataAndApolloMocksWrapper } from '~/testing/jest/getJestMetadataAndApolloMocksWrapper';
 import { JestRecordIndexContextProviderWrapper } from '~/testing/jest/JestRecordIndexContextProviderWrapper';
 import {
@@ -197,7 +197,7 @@ const mocks: MockedResponse[] = [
       variables: {
         filter: {},
         orderBy: [{ position: 'AscNullsFirst' }],
-        limit: QUERY_DEFAULT_LIMIT_RECORDS,
+        limit: DEFAULT_RECORD_INDEX_PAGE_SIZE,
       },
     },
     result: jest.fn(() => ({
